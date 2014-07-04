@@ -23,6 +23,8 @@ public class ClearService extends NotificationListenerService {
         public void onReceive(Context context, Intent intent) {
             active.clear();
             cancelAllNotifications();
+            NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+            nm.cancelAll();
         }
     };
 
@@ -53,7 +55,6 @@ public class ClearService extends NotificationListenerService {
         .setOngoing(true)
         .setSmallIcon(R.drawable.ic_stat_clear)
         .setPriority(Notification.PRIORITY_HIGH)
-//        .setContentText(getString(R.string.clear_notifications))
         .setContentTitle(getString(R.string.clear_notifications))
         .setContentIntent(pi)
         .build();
@@ -65,7 +66,6 @@ public class ClearService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        super.onNotificationPosted(sbn);
         if (getPackageName().equals(sbn.getPackageName()))
             return;
         active.add(sbn.getKey());
@@ -74,7 +74,6 @@ public class ClearService extends NotificationListenerService {
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
-        super.onNotificationRemoved(sbn);
         if (getPackageName().equals(sbn.getPackageName()))
             return;
         active.remove(sbn.getKey());

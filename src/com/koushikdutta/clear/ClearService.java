@@ -66,7 +66,7 @@ public class ClearService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        if (getPackageName().equals(sbn.getPackageName()))
+        if (shouldIgnoreNotification(sbn))
             return;
         active.add(sbn.getKey());
         process();
@@ -74,9 +74,13 @@ public class ClearService extends NotificationListenerService {
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
-        if (getPackageName().equals(sbn.getPackageName()))
+        if (shouldIgnoreNotification(sbn))
             return;
         active.remove(sbn.getKey());
         process();
+    }
+
+    private boolean shouldIgnoreNotification(StatusBarNotification sbn) {
+        return getPackageName().equals(sbn.getPackageName()) || !sbn.isClearable() || sbn.isOngoing();
     }
 }

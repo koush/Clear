@@ -17,6 +17,7 @@ import java.util.HashSet;
  */
 public class ClearService extends NotificationListenerService {
     public static final int CLEAR_NOTIFICATION_ID = 3421;
+    private static final String GOOGLE_NOW_PACKAGE = "com.google.android.googlequicksearchbox";
 
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -81,6 +82,10 @@ public class ClearService extends NotificationListenerService {
     }
 
     private boolean shouldIgnoreNotification(StatusBarNotification sbn) {
-        return getPackageName().equals(sbn.getPackageName()) || !sbn.isClearable() || sbn.isOngoing();
+        String notificationPackage = sbn.getPackageName();
+        return notificationPackage.equals(getPackageName()) //
+                || notificationPackage.equals(GOOGLE_NOW_PACKAGE) //
+                || !sbn.isClearable() //
+                || sbn.isOngoing();
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Clear</string>
-    <string name="configure_service">Configure Service</string>
-    <string name="clear_notifications">Clear Notifications</string>
+    <string name="configure_service">Configure service</string>
+    <string name="clear_notifications">Clear notifications</string>
 </resources>
